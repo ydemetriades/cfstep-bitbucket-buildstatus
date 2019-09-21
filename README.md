@@ -1,0 +1,1 @@
+codefresh-bitbucket-buildstatus
