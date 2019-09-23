@@ -44,5 +44,5 @@ print(response.text)
 
 if response:
     exit(0)
-else
+else:
     exit(1)
