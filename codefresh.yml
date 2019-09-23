@@ -3,16 +3,14 @@ steps:
   Clone:
     title: Running docker image
     type: git-clone
-    arguments:
-      working_directory: '${{main_clone}}'
-      repo: '${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}'
-      git: github
-      revision: '${{CF_REVISION}}'
+    repo: '${{CF_REPO_OWNER}}/${{CF_REPO_NAME}}'
+    git: github
+    revision: '${{CF_REVISION}}'
   BuildingDockerImage:
     title: Building Docker Image
     type: build
     image_name: ydemetriades/bitbucket-buildstatus
-    working_directory: ./
+    working_directory: ${{Clone}}
     dockerfile: Dockerfile
   PushingToDockerRegistry:
     title: Pushing to Docker Registry
