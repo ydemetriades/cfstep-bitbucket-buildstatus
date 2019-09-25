@@ -8,6 +8,8 @@ repo_slug = os.getenv('CF_REPO_NAME')
 repo_auth_user = os.getenv('BB_BSN_REPO_AUTH_USER', repo_owner)
 repo_auth_password = os.getenv('BB_BSN_REPO_AUTH_PASSWORD')
 
+bb_url = os.getenv('BB_BSN_URL', 'https://api.bitbucket.org')
+
 cf_build_id = os.getenv('CF_BUILD_ID')
 cf_status = os.getenv('CF_BUILD_STATUS', 'STOPPED') # 'SUCCESSFUL', 'FAILED', 'INPROGRESS', 'STOPPED'
 cf_revision = os.getenv('CF_REVISION')
@@ -24,9 +26,10 @@ data = {
 }
 
 # Construct URL
-api_url = ('https://api.bitbucket.org/2.0/repositories/'
+api_url = ('%(url)s/2.0/repositories/'
            '%(owner)s/%(repo_slug)s/commit/%(revision)s/statuses/build'
-           % {'owner': repo_owner,
+           % {'url': bb_url,
+              'owner': repo_owner,
               'repo_slug': repo_slug,
               'revision': cf_revision})
 

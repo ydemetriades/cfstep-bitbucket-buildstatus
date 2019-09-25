@@ -16,6 +16,9 @@ maintainers:
   email: yiannis.demetriades@gmail.com
 icon: https://raw.githubusercontent.com/ydemetriades/codefresh-bitbucket-buildstatus/master/icon.jpg
 envs:
+- name: BB_BSN_URL
+  type: optional
+  description: Bitbucket API Url. Can be used to point to Bitbucket Server instead.
 - name: BB_BSN_REPO_AUTH_USER
   type: optional
   description: Bitbucket API Authorization Username
@@ -23,5 +26,5 @@ envs:
   type: required
   description: Bitbucket API Authorization Password
 - name: BB_BSN_REPO_AUTH_USER
-  type: required
+  type: optional
   description: Build Status. Must be one of ['SUCCESSFUL', 'FAILED', 'INPROGRESS', 'STOPPED']

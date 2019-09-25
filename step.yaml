@@ -2,7 +2,7 @@ kind: step-type
 version: '1.0'
 metadata:
   name: ydemetriades/bitbucket-buildstatus
-  version: 0.0.2
+  version: 0.0.3
   isPublic: true
   description: Update Bitbucket Commit Build Status
   sources:
@@ -75,6 +75,10 @@ spec:
             "BB_BSN_REPO_AUTH_PASSWORD"
         ],
         "properties": {
+            "BB_BSN_URL": {
+                "type": "string",
+                "description": "Bitbucket API Url. Can be used to point to Bitbucket Server instead."
+            },
             "BB_BSN_REPO_AUTH_USER": {
                 "type": "string",
                 "description": "Bitbucket API Authorization Username"
