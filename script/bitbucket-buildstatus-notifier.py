@@ -5,9 +5,13 @@ import requests
 repo_owner = os.getenv('CF_REPO_OWNER')
 repo_slug = os.getenv('CF_REPO_NAME')
 
-repo_auth_user = os.getenv('BB_BSN_REPO_AUTH_USER', repo_owner)
+repo_auth_user = os.getenv('BB_BSN_REPO_AUTH_USER')
 repo_auth_password = os.getenv('BB_BSN_REPO_AUTH_PASSWORD')
 
+if repo_auth_user is None:
+    print("Authentication User Environment Variable [BB_BSN_REPO_AUTH_USER] is not defined.")
+    exit(2)
+    
 if repo_auth_password is None:
     print("Authentication Password Environment Variable [BB_BSN_REPO_AUTH_PASSWORD] is not defined.")
     exit(2)
