@@ -72,6 +72,7 @@ spec:
         "additionalProperties": false,
         "patterns": [],
         "required": [
+            "CF_BUILD_STATUS",
             "BB_BSN_REPO_AUTH_PASSWORD"
         ],
         "properties": {

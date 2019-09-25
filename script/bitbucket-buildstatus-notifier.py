@@ -8,6 +8,10 @@ repo_slug = os.getenv('CF_REPO_NAME')
 repo_auth_user = os.getenv('BB_BSN_REPO_AUTH_USER', repo_owner)
 repo_auth_password = os.getenv('BB_BSN_REPO_AUTH_PASSWORD')
 
+if repo_auth_password is None:
+    print("Authentication Password Environment Variable [BB_BSN_REPO_AUTH_PASSWORD] is not defined.")
+    exit(2)
+
 bb_url = os.getenv('BB_BSN_URL', 'https://api.bitbucket.org')
 
 cf_build_id = os.getenv('CF_BUILD_ID')
