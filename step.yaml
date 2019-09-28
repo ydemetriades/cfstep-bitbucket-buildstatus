@@ -2,7 +2,7 @@ kind: step-type
 version: '1.0'
 metadata:
   name: ydemetriades/bitbucket-buildstatus
-  version: 0.0.3
+  version: 0.0.4
   isPublic: true
   description: Update Bitbucket Commit Build Status
   sources:
@@ -98,7 +98,7 @@ spec:
   steps:
     main:
       name: ydemetriades/bitbucket-buildstatus
-      image: ydemetriades/bitbucket-buildstatus
+      image: ydemetriades/cfstep-bitbucket-buildstatus
       environment:
         - BB_BSN_REPO_AUTH_USER=${{BB_BSN_REPO_AUTH_USER}}
         - BB_BSN_REPO_AUTH_PASSWORD=${{BB_BSN_REPO_AUTH_PASSWORD}}

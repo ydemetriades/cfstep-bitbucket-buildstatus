@@ -9,7 +9,7 @@ steps:
   BuildingDockerImage:
     title: Building Docker Image
     type: build
-    image_name: ydemetriades/bitbucket-buildstatus
+    image_name: ydemetriades/cfstep-bitbucket-buildstatus
     working_directory: ${{Clone}}
     dockerfile: Dockerfile
   PushingToDockerRegistry:
