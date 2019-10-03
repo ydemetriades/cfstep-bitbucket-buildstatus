@@ -2,11 +2,11 @@ kind: step-type
 version: '1.0'
 metadata:
   name: ydemetriades/bitbucket-buildstatus
-  version: 0.0.4
+  version: 0.0.5
   isPublic: true
   description: Update Bitbucket Commit Build Status
   sources:
-    - 'https://github.com/ydemetriades/codefresh-bitbucket-buildstatus'
+    - 'https://github.com/ydemetriades/cfstep-bitbucket-buildstatus'
   stage: incubating
   maintainers:
     - name: Yiannis Demetriades
@@ -17,7 +17,7 @@ metadata:
   tags: []
   icon:
     type: svg
-    url: https://cdn.jsdelivr.net/gh/ydemetriades/codefresh-bitbucket-buildstatus/icon.svg
+    url: https://cdn.jsdelivr.net/gh/ydemetriades/cfstep-bitbucket-buildstatus/icon.svg
     background: "#f4f4f4"
   examples:
     - description: bitbucket-buildstatus-basic-example

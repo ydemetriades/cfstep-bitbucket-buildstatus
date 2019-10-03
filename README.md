@@ -1,13 +1,15 @@
 # Bitbucket Build Status
 
 ## Description:
-This plugin enables codefresh pipelines to update the Build Status of a commit in Commit.
+This plugin enables Codefresh Pipelines to update the Build Status of a commit in Bitbucket Cloud or Bitbucket Server.
 
 Can be used to trigger pipelines for CI, Pull Request merge check etc.
 
 ## Usage
 
-It can be used with two different approaches, as a docker image or as a Codefresh step.
+In this section will find the available Parameters and Examples.
+
+The following examples are using the `ydemetriades/bitbucket-buildstatus` Codefresh step available in [Marketplace](https://codefresh.io/steps/step/ydemetriades%2Fbitbucket-buildstatus)
 
 ### Parameters
 
@@ -15,42 +17,39 @@ Both, Codefresh step and docker image, are configurable through parameters in or
 
 |Name|Required|Description|Available Options|
 |----|--------|-----------|-----------------|
-|BB_BSN_REPO_AUTH_USER|No|Bitbucket API Authorization Username|-|
-|BB_BSN_REPO_AUTH_PASSWORD|Yes|Bitbucket API Authorization Password|-|
-|BB_BSN_REPO_AUTH_PASSWORD|Yes|Build Status|`SUCCESSFUL` `FAILED` `INPROGRESS` `STOPPED`|
+|BB_BSN_URL|Yes|Bitbucket Server API Url|-|
+|BB_BSN_REPO_AUTH_USER|Yes|Bitbucket Server API Authorization Username|-|
+|BB_BSN_REPO_AUTH_PASSWORD|Yes|Bitbucket Server API Authorization Password|-|
+|CF_BUILD_STATUS|Yes|Build Status|`SUCCESSFUL` `FAILED` `INPROGRESS` `STOPPED`|
 
-### Docker Image
-
-#### Example
-
-The following step can be used in any Codefresh pipeline and uses the docker image approach.
+### Example
 
 ```yaml
 version: '1.0'
 steps:
-    UpdateBuildStatus:
-      image: codefreshplugins/bitbucket-buildstatus
-      environment:
-        - BB_BSN_REPO_AUTH_USER=${{BB_BSN_REPO_AUTH_USER}}
-        - BB_BSN_REPO_AUTH_PASSWORD=${{BB_BSN_REPO_AUTH_USER}}
-        - CF_BUILD_STATUS=${{CF_BUILD_STATUS}}
+  BB_Update_BuildStatus:
+    type: ydemetriades/bitbucket-buildstatus
+    arguments:
+      BB_BSN_URL: ${{BB_BSN_URL}}
+      BB_BSN_REPO_AUTH_USER: ${{BB_BSN_REPO_AUTH_USER}}
+      BB_BSN_REPO_AUTH_PASSWORD: ${{BB_BSN_REPO_AUTH_PASSWORD}}
+      CF_BUILD_STATUS: ${{CF_BUILD_STATUS}}
 ```
 
-#### Advanced Example
-
-Advanced usage is also available which updates Bitbucket Build Status.
+### Advanced Example
 
 ```yaml
 version: '1.0'
 mode: parallel
 steps:
-    BB_Update_BuildStatus_InProgress:
+  BB_Update_BuildStatus_InProgress:
+    type: ydemetriades/bitbucket-buildstatus
     fail_fast: false
-    image: codefreshplugins/bitbucket-buildstatus
-    environment:
-        - BB_BSN_REPO_AUTH_USER=${{BB_BSN_REPO_AUTH_USER}}
-        - BB_BSN_REPO_AUTH_PASSWORD=${{BB_BSN_REPO_AUTH_USER}}
-        - CF_BUILD_STATUS='INPROGRESS'
+    arguments:
+      BB_BSN_URL: ${{BB_BSN_URL}}
+      BB_BSN_REPO_AUTH_USER: ${{BB_BSN_REPO_AUTH_USER}}
+      BB_BSN_REPO_AUTH_PASSWORD: ${{BB_BSN_REPO_AUTH_PASSWORD}}
+      CF_BUILD_STATUS: 'INPROGRESS'
 
     ## [Some more steps...]
 
@@ -58,96 +57,32 @@ steps:
     type: parallel
     fail_fast: false
     when:
-        condition:
+      condition:
         all:
-            myCondition: workflow.result == 'finished'
+          myCondition: workflow.result == 'finished'
     steps:
-        BB_Update_BuildStatus_Successful:
-            image: codefreshplugins/bitbucket-buildstatus
-            when:
-                condition:
-                all:
-                    myCondition: workflow.result == 'success'
-            environment:
-                - BB_BSN_REPO_AUTH_USER=${{BB_BSN_REPO_AUTH_USER}}
-                - BB_BSN_REPO_AUTH_PASSWORD=${{BB_BSN_REPO_AUTH_USER}}
-                - CF_BUILD_STATUS=SUCCESSFULL
-        BB_Update_BuildStatus_Failed:
-            image: codefreshplugins/bitbucket-buildstatus
-            when:
-                condition:
-                all:
-                    myCondition: workflow.result == 'failure'
-            environment:
-                - BB_BSN_REPO_AUTH_USER=${{BB_BSN_REPO_AUTH_USER}}
-                - BB_BSN_REPO_AUTH_PASSWORD=${{BB_BSN_REPO_AUTH_USER}}
-                - CF_BUILD_STATUS='FAILED'
-```
-
-### Codefresh Step
-
-Also, a Codefresh step is available to use which uses docker image `codefreshplugins/bitbucket-buildstatus`
-
-#### Example
-
-
-```yaml
-version: '1.0'
-steps:
-    BB_Update_BuildStatus:
-    type: bitbucket-buildstatus
-    arguments:
-        BB_BSN_REPO_AUTH_USER: ${{BB_BSN_REPO_AUTH_USER}}
-        BB_BSN_REPO_AUTH_PASSWORD: ${{BB_BSN_REPO_AUTH_USER}}
-        CF_BUILD_STATUS: ${{CF_BUILD_STATUS}}
-
-```
-
-#### Advanced Example
-
-```yaml
-version: '1.0'
-mode: parallel
-steps:
-    BB_Update_BuildStatus_InProgress:
-    type: bitbucket-buildstatus
-    fail_fast: false
-    arguments:
-        BB_BSN_REPO_AUTH_USER: ${{BB_BSN_REPO_AUTH_USER}}
-        BB_BSN_REPO_AUTH_PASSWORD: ${{BB_BSN_REPO_AUTH_USER}}
-        CF_BUILD_STATUS: 'INPROGRESS'
-
-    ## [Some more steps...]
-    
-    BB_Update_BuildStatus_Finished:
-    type: parallel
-    fail_fast: false
-    when:
-        condition:
-        all:
-            myCondition: workflow.result == 'finished'
-    steps:
-        BB_Update_BuildStatus_Successful:
-            type: bitbucket-buildstatus
-            when:
-                condition:
-                all:
-                    myCondition: workflow.result == 'success'
-            arguments:
-                BB_BSN_REPO_AUTH_USER: ${{BB_BSN_REPO_AUTH_USER}}
-                BB_BSN_REPO_AUTH_PASSWORD: ${{BB_BSN_REPO_AUTH_USER}}
-                CF_BUILD_STATUS: 'SUCCESSFULL'
-        BB_Update_BuildStatus_Failed:
-            type: bitbucket-buildstatus
-            when:
-                condition:
-                all:
-                    myCondition: workflow.result == 'failure'
-            arguments:
-                BB_BSN_REPO_AUTH_USER: ${{BB_BSN_REPO_AUTH_USER}}
-                BB_BSN_REPO_AUTH_PASSWORD: ${{BB_BSN_REPO_AUTH_USER}}
-                CF_BUILD_STATUS: 'FAILED'
-
+      BB_Update_BuildStatus_Successful:
+        type: ydemetriades/bitbucket-buildstatus
+        when:
+          condition:
+            all:
+              myCondition: workflow.result == 'success'
+        arguments:
+          BB_BSN_URL: ${{BB_BSN_URL}}
+          BB_BSN_REPO_AUTH_USER: ${{BB_BSN_REPO_AUTH_USER}}
+          BB_BSN_REPO_AUTH_PASSWORD: ${{BB_BSN_REPO_AUTH_PASSWORD}}
+          CF_BUILD_STATUS: 'SUCCESSFULL'
+      BB_Update_BuildStatus_Failed:
+        type: ydemetriades/bitbucket-buildstatus
+        when:
+          condition:
+            all:
+              myCondition: workflow.result == 'failure'
+        arguments:
+          BB_BSN_URL: ${{BB_BSN_URL}}
+          BB_BSN_REPO_AUTH_USER: ${{BB_BSN_REPO_AUTH_USER}}
+          BB_BSN_REPO_AUTH_PASSWORD: ${{BB_BSN_REPO_AUTH_PASSWORD}}
+          CF_BUILD_STATUS: 'FAILED'
 ```
 
 ## Maintainers

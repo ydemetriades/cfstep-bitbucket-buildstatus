@@ -10,11 +10,11 @@ keywords:
 - bitbucket
 - buildstatus
 sources:
-- https://github.com/ydemetriades/codefresh-bitbucket-buildstatus
+- https://github.com/ydemetriades/cfstep-bitbucket-buildstatus
 maintainers:
 - name: Yiannis Demetriades
   email: yiannis.demetriades@gmail.com
-icon: https://raw.githubusercontent.com/ydemetriades/codefresh-bitbucket-buildstatus/master/icon.jpg
+icon: https://raw.githubusercontent.com/ydemetriades/cfstep-bitbucket-buildstatus/master/icon.jpg
 envs:
 - name: BB_BSN_URL
   type: optional
