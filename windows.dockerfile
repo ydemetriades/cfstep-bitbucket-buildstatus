@@ -1,6 +1,4 @@
 # escape=`
-
-# FROM mcr.microsoft.com/powershell:latest
 FROM mcr.microsoft.com/powershell:windowsservercore-1803
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
